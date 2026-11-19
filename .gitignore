@@ -1,0 +1,9 @@
+# Environment / secrets — never commit
+.env
+.env.*
+!.env.example
+# Environment / secrets — never commit
+.env
+.env.*
+assets/env.json
+!.env.example

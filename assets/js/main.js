@@ -189,59 +189,149 @@
 
   /* 05. Contact form ------------------------------------------------------ */
   var OWNER_EMAIL = "ayanm4087@gmail.com";
+  var EMAILJS_ENV_PATH = "assets/env.json";
+  var EMAILJS_PUBLIC_KEY = null;
+  var EMAILJS_SERVICE_ID = "service_e95jpha";
+  var EMAILJS_TEMPLATE_ID = "template_byd2e2k";
+
+  function loadEnvKey() {
+    return new Promise(function (resolve) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", EMAILJS_ENV_PATH, true);
+      xhr.timeout = 4000;
+      xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          try {
+            var data = JSON.parse(xhr.responseText);
+            if (data && typeof data.EMAILJS_PUBLIC_KEY === "string") {
+              resolve(data.EMAILJS_PUBLIC_KEY);
+              return;
+            }
+          } catch (e) { /* ignore malformed env file */ }
+        }
+        resolve(null);
+      };
+      xhr.onerror = function () { resolve(null); };
+      xhr.ontimeout = function () { resolve(null); };
+      try { xhr.send(null); } catch (e) { resolve(null); }
+    });
+  }
   var form = document.querySelector("[data-contact-form]");
 
   if (form) {
     var status = form.querySelector("[data-form-status]");
 
-    var showStatus = function (mailto) {
+    var showSuccess = function () {
       if (!status) return;
       status.hidden = false;
-      status.textContent = "Your mail app should open with everything filled in. If it didn't, ";
+      status.textContent = "Sent — thanks, ";
+      var nameEl = form.querySelector('[name="name"]');
+      var name = nameEl ? nameEl.value.trim() : "";
+      status.append(name ? name + "." : "I'll be in touch soon.");
+    };
 
-      var manualLink = document.createElement("a");
-      manualLink.href = mailto;
-      manualLink.textContent = "open the email manually";
-      status.append(manualLink, " or write to ");
-
+    var showFallback = function () {
+      if (!status) return;
+      status.hidden = false;
+      status.textContent = "Couldn't send automatically. Your mail app should open with everything filled in; if it didn't, just write to ";
       var directLink = document.createElement("a");
       directLink.href = "mailto:" + OWNER_EMAIL;
       directLink.textContent = OWNER_EMAIL;
       status.append(directLink, ".");
     };
 
+    var serializeServices = function (data) {
+      var fields = ["website", "video", "software", "teaching"];
+      var picked = [];
+      fields.forEach(function (field) {
+        var val = data.get(field);
+        if (val) picked.push(val.toString());
+      });
+      return picked.length ? picked.join(", ") : "Not specified";
+    };
+
+    var keyReady = new Promise(function (resolve) {
+      if (EMAILJS_PUBLIC_KEY) {
+        resolve();
+        return;
+      }
+      var timer = setTimeout(function () { resolve(false); }, 6000);
+      var check = function () {
+        if (EMAILJS_PUBLIC_KEY) {
+          clearTimeout(timer);
+          resolve(true);
+        } else {
+          setTimeout(check, 80);
+        }
+      };
+      check();
+    });
+
     form.addEventListener("submit", function (event) {
       event.preventDefault();
 
+      if (!window.emailjs || !window.emailjs.sendForm) {
+        showFallback();
+        return;
+      }
+      if (!EMAILJS_PUBLIC_KEY) {
+        showFallback();
+        return;
+      }
+
       var data = new FormData(form);
-      var name = (data.get("name") || "").toString().trim();
-      var email = (data.get("email") || "").toString().trim();
-      var message = (data.get("message") || "").toString().trim();
-      var services = ["website", "video", "software", "teaching"]
-        .map(function (field) {
-          return data.get(field);
+      var services = serializeServices(data);
+
+      var params = {
+        name: (data.get("name") || "").toString().trim(),
+        email: (data.get("email") || "").toString().trim(),
+        services: services,
+        message: (data.get("message") || "").toString().trim(),
+      };
+
+      status.hidden = false;
+      status.textContent = "Sending…";
+
+      window.emailjs
+        .sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
+        .then(function () {
+          showSuccess();
         })
-        .filter(Boolean);
+        .catch(function (err) {
+          var msg = (err && err.text) ? err.text : String(err);
+          // Only treat a real send failure as a fallback trigger; a network
+          // or config hiccup is not the user's fault.
+          showFallback();
+          console.error("Contact form: EmailJS sendForm failed: ", msg);
+        });
+    });
+  }
 
-      var lines = [
-        "Name: " + name,
-        "Email: " + email,
-        "Services: " + (services.length ? services.join(", ") : "Not specified"),
-        "",
-        message || "(no message)",
-      ];
+  function loadEmailJs() {
+    return new Promise(function (resolve, reject) {
+      if (window.emailjs && window.emailjs.sendForm) {
+        resolve();
+        return;
+      }
+      var script = document.createElement("script");
+      script.src = "https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js";
+      script.async = true;
+      script.defer = true;
+      script.onload = function () {
+        window.emailjs.init(EMAILJS_PUBLIC_KEY);
+        resolve();
+      };
+      script.onerror = function () {
+        reject(new Error("Failed to load emailjs-com from CDN"));
+      };
+      document.head.appendChild(script);
+    });
+  }
 
-      var subject = "Project enquiry from " + (name || "your portfolio");
-      var mailto =
-        "mailto:" +
-        OWNER_EMAIL +
-        "?subject=" +
-        encodeURIComponent(subject) +
-        "&body=" +
-        encodeURIComponent(lines.join("\r\n"));
-
-      window.location.href = mailto;
-      showStatus(mailto);
+  if (form) {
+    loadEnvKey().then(function (key) {
+      EMAILJS_PUBLIC_KEY = key || EMAILJS_PUBLIC_KEY;
+      loadEmailJs();
     });
   }
 
