@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Graphic Design — Ayan Mahboob</title>
+    <meta
+      name="description"
+      content="A selection of graphic design, interface and visual work by Ayan Mahboob."
+    />
+    <meta name="theme-color" content="#08060f" />
+    <link rel="icon" href="assets/images/profile/ayan-avatar.jpg" type="image/jpeg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Sora:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" data-header>
+      <div class="container site-header__inner">
+        <a class="brand" href="index.html" aria-label="Ayan — home">
+          <img
+            class="brand__avatar"
+            src="assets/images/profile/ayan-avatar.jpg"
+            alt=""
+            width="36"
+            height="36"
+          />
+          <span class="brand__name">Ayan<span class="brand__dot">.</span></span>
+        </a>
+
+        <nav class="nav" aria-label="Primary">
+          <ul class="nav__list">
+            <li><a class="nav__link" href="index.html">Home</a></li>
+            <li><a class="nav__link" href="index.html#about">About</a></li>
+            <li><a class="nav__link" href="index.html#services">Services</a></li>
+            <li><a class="nav__link" href="index.html#projects">Projects</a></li>
+            <li><a class="nav__link" href="index.html#contact">Contact</a></li>
+            <li><a class="nav__link" href="resume.html">Resume</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <a class="header-phone" href="tel:6202070154">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z" />
+            </svg>
+            6202070154
+          </a>
+          <a class="btn btn--primary btn--small" href="index.html#contact">Let's talk</a>
+        </div>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+          aria-label="Toggle menu"
+          data-nav-toggle
+        >
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <div class="mobile-nav" id="mobile-nav" data-mobile-nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="resume.html">Resume</a>
+        <a class="btn btn--primary" href="index.html#contact">Let's talk</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="container">
+          <a class="page-hero__back" href="index.html#projects">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M19 12H5M11 18l-6-6 6-6" />
+            </svg>
+            Back to portfolio
+          </a>
+
+          <p class="eyebrow"><span class="eyebrow__index">01</span> Gallery</p>
+          <h1 class="section__title">Graphic <span class="grad">design</span></h1>
+          <p class="section__lede">
+            Posters, interfaces and visual studies — a closer look at the work behind the pixels.
+          </p>
+        </div>
+      </section>
+
+      <section class="section section--flush">
+        <div class="container">
+          <div class="gallery__grid" data-reveal-group>
+            <a
+              class="gallery__item"
+              href="assets/images/gallery/portfolio-concept.jpg"
+              data-lightbox
+              data-caption="Portfolio concept — cover art"
+              data-reveal
+            >
+              <span class="gallery__thumb">
+                <img
+                  src="assets/images/gallery/portfolio-concept.jpg"
+                  alt="Dark portfolio cover concept with a quote"
+                  width="584"
+                  height="584"
+                  loading="lazy"
+                />
+              </span>
+              <span class="gallery__info">
+                <span class="gallery__title">Portfolio concept</span>
+                <span class="gallery__meta">Cover art</span>
+              </span>
+            </a>
+
+            <a
+              class="gallery__item"
+              href="assets/images/gallery/todos-ui.jpg"
+              data-lightbox
+              data-caption="Todos — app interface"
+              data-reveal
+            >
+              <span class="gallery__thumb">
+                <img
+                  src="assets/images/gallery/todos-ui.jpg"
+                  alt="Todos app interface with task list"
+                  width="530"
+                  height="530"
+                  loading="lazy"
+                />
+              </span>
+              <span class="gallery__info">
+                <span class="gallery__title">Todos</span>
+                <span class="gallery__meta">App interface</span>
+              </span>
+            </a>
+
+            <a
+              class="gallery__item"
+              href="assets/images/gallery/todos-desktop.jpg"
+              data-lightbox
+              data-caption="Todos — desktop layout"
+              data-reveal
+            >
+              <span class="gallery__thumb">
+                <img
+                  src="assets/images/gallery/todos-desktop.jpg"
+                  alt="Todos app desktop layout"
+                  width="423"
+                  height="504"
+                  loading="lazy"
+                />
+              </span>
+              <span class="gallery__info">
+                <span class="gallery__title">Todos · desktop</span>
+                <span class="gallery__meta">Layout study</span>
+              </span>
+            </a>
+
+            <a
+              class="gallery__item"
+              href="assets/images/gallery/old-portfolio.jpg"
+              data-lightbox
+              data-caption="Ayan's Projects — earlier portfolio design"
+              data-reveal
+            >
+              <span class="gallery__thumb">
+                <img
+                  src="assets/images/gallery/old-portfolio.jpg"
+                  alt="Earlier portfolio design titled Ayan's Projects"
+                  width="397"
+                  height="551"
+                  loading="lazy"
+                />
+              </span>
+              <span class="gallery__info">
+                <span class="gallery__title">Ayan's Projects</span>
+                <span class="gallery__meta">Web design</span>
+              </span>
+            </a>
+
+            <a
+              class="gallery__item"
+              href="assets/images/gallery/poster-study.jpg"
+              data-lightbox
+              data-caption="Poster study — colour and type"
+              data-reveal
+            >
+              <span class="gallery__thumb">
+                <img
+                  src="assets/images/gallery/poster-study.jpg"
+                  alt="Bold poster study of a woman with headphones"
+                  width="1000"
+                  height="1000"
+                  loading="lazy"
+                />
+              </span>
+              <span class="gallery__info">
+                <span class="gallery__title">Poster study</span>
+                <span class="gallery__meta">Graphic design</span>
+              </span>
+            </a>
+
+            <a
+              class="gallery__item"
+              href="assets/images/gallery/product-shot.jpg"
+              data-lightbox
+              data-caption="Product shot — beverage can on yellow"
+              data-reveal
+            >
+              <span class="gallery__thumb">
+                <img
+                  src="assets/images/gallery/product-shot.jpg"
+                  alt="Beverage can on a yellow background"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                />
+              </span>
+              <span class="gallery__info">
+                <span class="gallery__title">Product shot</span>
+                <span class="gallery__meta">Art direction</span>
+              </span>
+            </a>
+
+            <a
+              class="gallery__item"
+              href="assets/images/gallery/sports-shot.jpg"
+              data-lightbox
+              data-caption="Motion study — top-down basketball"
+              data-reveal
+            >
+              <span class="gallery__thumb">
+                <img
+                  src="assets/images/gallery/sports-shot.jpg"
+                  alt="Top-down view of a basketball player"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                />
+              </span>
+              <span class="gallery__info">
+                <span class="gallery__title">Motion study</span>
+                <span class="gallery__meta">Photography</span>
+              </span>
+            </a>
+
+            <a
+              class="gallery__item"
+              href="assets/images/gallery/portrait.jpg"
+              data-lightbox
+              data-caption="Portrait — daytime frame"
+              data-reveal
+            >
+              <span class="gallery__thumb">
+                <img
+                  src="assets/images/gallery/portrait.jpg"
+                  alt="Portrait of Ayan in a white t-shirt"
+                  width="900"
+                  height="900"
+                  loading="lazy"
+                />
+              </span>
+              <span class="gallery__info">
+                <span class="gallery__title">Portrait</span>
+                <span class="gallery__meta">Photography</span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer__inner">
+        <p>
+          Copyright © 2022–<span data-year>2026</span>
+          <a href="index.html">Ayan's Portfolio</a>. All rights reserved.
+        </p>
+        <a class="to-top" href="#main">
+          Back to top
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 19V5M6 11l6-6 6 6" />
+          </svg>
+        </a>
+      </div>
+    </footer>
+
+    <script src="assets/js/main.js" defer></script>
+  </body>
+</html>
