@@ -188,9 +188,28 @@
   }
 
   /* 05. Contact form ------------------------------------------------------ */
+  var OWNER_EMAIL = "ayanm4087@gmail.com";
   var form = document.querySelector("[data-contact-form]");
 
   if (form) {
+    var status = form.querySelector("[data-form-status]");
+
+    var showStatus = function (mailto) {
+      if (!status) return;
+      status.hidden = false;
+      status.textContent = "Your mail app should open with everything filled in. If it didn't, ";
+
+      var manualLink = document.createElement("a");
+      manualLink.href = mailto;
+      manualLink.textContent = "open the email manually";
+      status.append(manualLink, " or write to ");
+
+      var directLink = document.createElement("a");
+      directLink.href = "mailto:" + OWNER_EMAIL;
+      directLink.textContent = OWNER_EMAIL;
+      status.append(directLink, ".");
+    };
+
     form.addEventListener("submit", function (event) {
       event.preventDefault();
 
@@ -213,12 +232,16 @@
       ];
 
       var subject = "Project enquiry from " + (name || "your portfolio");
-      window.location.href =
-        "mailto:ayanmehboob293@gmail.com" +
+      var mailto =
+        "mailto:" +
+        OWNER_EMAIL +
         "?subject=" +
         encodeURIComponent(subject) +
         "&body=" +
-        encodeURIComponent(lines.join("\n"));
+        encodeURIComponent(lines.join("\r\n"));
+
+      window.location.href = mailto;
+      showStatus(mailto);
     });
   }
 
