@@ -4,9 +4,8 @@
    01. Header & mobile navigation
    02. Scroll spy
    03. Reveal on scroll
-   04. Lightbox
-   05. Contact form
-   06. Footer year
+   04. Contact form
+   05. Footer year
    ========================================================================== */
 (function () {
   "use strict";
@@ -114,108 +113,9 @@
     });
   }
 
-  /* 04. Lightbox ---------------------------------------------------------- */
-  var galleryItems = Array.prototype.slice.call(
-    document.querySelectorAll("[data-lightbox]")
-  );
-
-  if (galleryItems.length) {
-    var box = document.createElement("div");
-    box.className = "lightbox";
-    box.setAttribute("role", "dialog");
-    box.setAttribute("aria-modal", "true");
-    box.setAttribute("aria-label", "Image viewer");
-    box.innerHTML =
-      '<button class="lightbox__close" type="button" aria-label="Close">&times;</button>' +
-      '<button class="lightbox__nav lightbox__nav--prev" type="button" aria-label="Previous image">&#8249;</button>' +
-      '<figure class="lightbox__figure"><img alt="" /><figcaption class="lightbox__caption"></figcaption></figure>' +
-      '<button class="lightbox__nav lightbox__nav--next" type="button" aria-label="Next image">&#8250;</button>';
-    document.body.appendChild(box);
-
-    var boxImage = box.querySelector("img");
-    var boxCaption = box.querySelector(".lightbox__caption");
-    var currentIndex = 0;
-
-    var renderLightbox = function () {
-      var item = galleryItems[currentIndex];
-      var thumbnail = item.querySelector("img");
-      boxImage.src = item.getAttribute("href");
-      boxImage.alt = thumbnail ? thumbnail.alt : "";
-      boxCaption.textContent = item.getAttribute("data-caption") || boxImage.alt;
-    };
-
-    var openLightbox = function (index) {
-      currentIndex = index;
-      renderLightbox();
-      box.classList.add("is-open");
-      document.body.style.overflow = "hidden";
-      box.querySelector(".lightbox__close").focus();
-    };
-
-    var closeLightbox = function () {
-      box.classList.remove("is-open");
-      document.body.style.overflow = "";
-    };
-
-    var stepLightbox = function (direction) {
-      currentIndex = (currentIndex + direction + galleryItems.length) % galleryItems.length;
-      renderLightbox();
-    };
-
-    galleryItems.forEach(function (item, index) {
-      item.addEventListener("click", function (event) {
-        event.preventDefault();
-        openLightbox(index);
-      });
-    });
-
-    box.addEventListener("click", function (event) {
-      if (event.target === box || event.target.closest(".lightbox__close")) {
-        closeLightbox();
-      } else if (event.target.closest(".lightbox__nav--prev")) {
-        stepLightbox(-1);
-      } else if (event.target.closest(".lightbox__nav--next")) {
-        stepLightbox(1);
-      }
-    });
-
-    document.addEventListener("keydown", function (event) {
-      if (!box.classList.contains("is-open")) return;
-      if (event.key === "Escape") closeLightbox();
-      if (event.key === "ArrowLeft") stepLightbox(-1);
-      if (event.key === "ArrowRight") stepLightbox(1);
-    });
-  }
-
-  /* 05. Contact form ------------------------------------------------------ */
+  /* 04. Contact form ------------------------------------------------------ */
   var OWNER_EMAIL = "ayanm4087@gmail.com";
-  var EMAILJS_ENV_PATH = "assets/env.json";
-  var EMAILJS_PUBLIC_KEY = null;
-  var EMAILJS_SERVICE_ID = "service_e95jpha";
-  var EMAILJS_TEMPLATE_ID = "template_byd2e2k";
-
-  function loadEnvKey() {
-    return new Promise(function (resolve) {
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", EMAILJS_ENV_PATH, true);
-      xhr.timeout = 4000;
-      xhr.onload = function () {
-        if (xhr.status >= 200 && xhr.status < 300) {
-          try {
-            var data = JSON.parse(xhr.responseText);
-            if (data && typeof data.EMAILJS_PUBLIC_KEY === "string") {
-              resolve(data.EMAILJS_PUBLIC_KEY);
-              return;
-            }
-          } catch (e) { /* ignore malformed env file */ }
-        }
-        resolve(null);
-      };
-      xhr.onerror = function () { resolve(null); };
-      xhr.ontimeout = function () { resolve(null); };
-      try { xhr.send(null); } catch (e) { resolve(null); }
-    });
-  }
+  var FORM_ENDPOINT = "https://formsubmit.co/ajax/" + OWNER_EMAIL;
   var form = document.querySelector("[data-contact-form]");
 
   if (form) {
@@ -250,92 +150,71 @@
       return picked.length ? picked.join(", ") : "Not specified";
     };
 
-    var keyReady = new Promise(function (resolve) {
-      if (EMAILJS_PUBLIC_KEY) {
-        resolve();
-        return;
-      }
-      var timer = setTimeout(function () { resolve(false); }, 6000);
-      var check = function () {
-        if (EMAILJS_PUBLIC_KEY) {
-          clearTimeout(timer);
-          resolve(true);
-        } else {
-          setTimeout(check, 80);
-        }
-      };
-      check();
-    });
-
     form.addEventListener("submit", function (event) {
       event.preventDefault();
 
-      if (!window.emailjs || !window.emailjs.sendForm) {
-        showFallback();
-        return;
-      }
-      if (!EMAILJS_PUBLIC_KEY) {
-        showFallback();
-        return;
-      }
-
       var data = new FormData(form);
-      var services = serializeServices(data);
-
-      var params = {
-        name: (data.get("name") || "").toString().trim(),
+      var name = (data.get("name") || "").toString().trim();
+      var payload = {
+        name: name,
         email: (data.get("email") || "").toString().trim(),
-        services: services,
+        services: serializeServices(data),
         message: (data.get("message") || "").toString().trim(),
+        _subject: "Portfolio enquiry from " + (name || "the website"),
+        _template: "table",
+        _captcha: "false",
       };
 
-      status.hidden = false;
-      status.textContent = "Sending…";
+      var submitButton = form.querySelector('button[type="submit"]');
+      if (submitButton) submitButton.disabled = true;
+      if (status) {
+        status.hidden = false;
+        status.textContent = "Sending…";
+      }
 
-      window.emailjs
-        .sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
-        .then(function () {
-          showSuccess();
+      fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
+      })
+        .then(function (response) {
+          return response.json().catch(function () {
+            return {};
+          });
         })
-        .catch(function (err) {
-          var msg = (err && err.text) ? err.text : String(err);
-          // Only treat a real send failure as a fallback trigger; a network
-          // or config hiccup is not the user's fault.
+        .then(function (result) {
+          if (result && String(result.success) === "true") {
+            showSuccess();
+            form.reset();
+            return;
+          }
+
+          var message = (result && result.message) || "";
+          // The first submission from a new form address has to be activated once
+          // from the owner's inbox before the endpoint starts delivering.
+          if (/activ/i.test(message)) {
+            if (status) {
+              status.hidden = false;
+              status.textContent =
+                "One-time setup: an activation link was emailed to " +
+                OWNER_EMAIL +
+                " — click it once and later messages come straight through.";
+            }
+            return;
+          }
+          throw new Error(message || "The form endpoint rejected it");
+        })
+        .catch(function (error) {
+          console.error("Contact form: send failed:", error);
           showFallback();
-          console.error("Contact form: EmailJS sendForm failed: ", msg);
+        })
+        .then(function () {
+          if (submitButton) submitButton.disabled = false;
         });
     });
   }
 
-  function loadEmailJs() {
-    return new Promise(function (resolve, reject) {
-      if (window.emailjs && window.emailjs.sendForm) {
-        resolve();
-        return;
-      }
-      var script = document.createElement("script");
-      script.src = "https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js";
-      script.async = true;
-      script.defer = true;
-      script.onload = function () {
-        window.emailjs.init(EMAILJS_PUBLIC_KEY);
-        resolve();
-      };
-      script.onerror = function () {
-        reject(new Error("Failed to load emailjs-com from CDN"));
-      };
-      document.head.appendChild(script);
-    });
-  }
-
-  if (form) {
-    loadEnvKey().then(function (key) {
-      EMAILJS_PUBLIC_KEY = key || EMAILJS_PUBLIC_KEY;
-      loadEmailJs();
-    });
-  }
-
-  /* 06. Footer year ------------------------------------------------------- */
+  /* 05. Footer year ------------------------------------------------------- */
   var year = new Date().getFullYear();
   document.querySelectorAll("[data-year]").forEach(function (node) {
     node.textContent = String(year);

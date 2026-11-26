@@ -116,29 +116,6 @@
               </a>
             </div>
           </div>
-
-          <div class="hero__media">
-            <div class="portrait">
-              <img
-                src="assets/images/profile/ayan-hero.jpg"
-                alt="Portrait of Ayan Mahboob"
-                width="1000"
-                height="1000"
-              />
-              <div class="portrait__card">
-                <img
-                  src="assets/images/profile/ayan-avatar.jpg"
-                  alt=""
-                  width="40"
-                  height="40"
-                />
-                <div>
-                  <p class="portrait__name">Ayan Mahboob</p>
-                  <p class="portrait__role">Software Engineer</p>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -146,24 +123,6 @@
       <section class="section" id="about">
         <div class="container">
           <div class="about__grid">
-            <div class="about__media" data-reveal>
-              <figure class="about__figure">
-                <img
-                  src="assets/images/profile/ayan-about.jpg"
-                  alt="Ayan Mahboob outdoors"
-                  width="900"
-                  height="1043"
-                />
-              </figure>
-              <div class="about__badge">
-                <img src="assets/images/profile/ayan-avatar.jpg" alt="" width="34" height="34" />
-                <p>
-                  Ayan Mahboob
-                  <span>Based in India · Open to work</span>
-                </p>
-              </div>
-            </div>
-
             <div class="about__body">
               <p class="eyebrow"><span class="eyebrow__index">01</span> About</p>
               <h2 class="section__title">My <span class="grad">story</span></h2>
@@ -238,11 +197,38 @@
             <p class="eyebrow"><span class="eyebrow__index">02</span> Experience</p>
             <h2 class="section__title">Where I've <span class="grad">worked</span></h2>
             <p class="section__lede">
-              Internship experience building and shipping responsive, production-ready interfaces.
+              Freelance video editing for YouTube creators, plus internship experience shipping
+              responsive, production-ready interfaces.
             </p>
           </div>
 
           <div class="timeline" data-reveal>
+            <article class="timeline__item">
+              <div class="timeline__when">
+                <span class="timeline__date">Ongoing</span>
+                <span class="timeline__place">Remote</span>
+              </div>
+              <div class="timeline__body">
+                <h3 class="timeline__role">Freelance Video Editor</h3>
+                <p class="timeline__org">YouTube creators</p>
+                <ul class="timeline__points">
+                  <li>
+                    Edit short-form reels and long-form videos for YouTubers end to end — hook-first
+                    pacing, captions, sound design, colour and titles.
+                  </li>
+                  <li>
+                    Deliver platform-ready 9:16 and 16:9 cuts, handling review rounds and revisions
+                    directly with each creator.
+                  </li>
+                </ul>
+                <ul class="tag-list">
+                  <li class="tag">Premiere Pro</li>
+                  <li class="tag">After Effects</li>
+                  <li class="tag">Photoshop</li>
+                </ul>
+              </div>
+            </article>
+
             <article class="timeline__item">
               <div class="timeline__when">
                 <span class="timeline__date">Dec 2024 – Jan 2025</span>
@@ -419,8 +405,8 @@
               </p>
             </div>
 
-            <a class="btn btn--ghost btn--small" href="graphic-design.html">
-              Browse graphic design
+            <a class="btn btn--ghost btn--small" href="projects.html">
+              View all projects
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                 <path d="M5 12h14M13 6l6 6-6 6" />
               </svg>
@@ -766,17 +752,28 @@
 
             <form
               class="form-card"
-              action="mailto:ayanm4087@gmail.com"
+              action="https://formsubmit.co/ayanm4087@gmail.com"
               method="post"
-              enctype="text/plain"
               data-contact-form
               data-reveal
             >
               <h3 class="form-card__title">Tell me about the project</h3>
               <p class="form-card__hint">
-                Fill this in and press Send message — your message is sent automatically to
+                Fill this in and press Send message — it goes straight to my inbox at
                 ayanm4087@gmail.com.
               </p>
+
+              <input type="hidden" name="_subject" value="Portfolio enquiry" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input
+                class="form__honey"
+                type="text"
+                name="_honey"
+                tabindex="-1"
+                autocomplete="off"
+                aria-hidden="true"
+              />
 
               <div class="form__row">
                 <label class="field">
