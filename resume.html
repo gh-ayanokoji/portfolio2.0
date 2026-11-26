@@ -42,6 +42,7 @@
             <li><a class="nav__link" href="index.html#about">About</a></li>
             <li><a class="nav__link" href="index.html#services">Services</a></li>
             <li><a class="nav__link" href="index.html#projects">Projects</a></li>
+            <li><a class="nav__link" href="index.html#edits">Edits</a></li>
             <li><a class="nav__link" href="index.html#contact">Contact</a></li>
             <li><a class="nav__link is-active" href="resume.html" aria-current="page">Resume</a></li>
           </ul>
@@ -75,6 +76,7 @@
         <a href="index.html#about">About</a>
         <a href="index.html#services">Services</a>
         <a href="index.html#projects">Projects</a>
+        <a href="index.html#edits">Edits</a>
         <a href="index.html#contact">Contact</a>
         <a href="resume.html">Resume</a>
         <a class="btn btn--primary" href="index.html#contact">Let's talk</a>
@@ -249,6 +251,39 @@
                   <li>
                     Implemented Federated Learning (FedAvg) for privacy-preserving distributed
                     training and MAML for few-shot adaptation to new environments.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="resume__entry">
+                <div class="resume__entry-head">
+                  <h4>RecruitFlow — C2C Recruiting Outreach Console</h4>
+                  <span class="resume__meta">Full-stack tool</span>
+                </div>
+                <p class="resume__stack">
+                  Node.js, Express.js, React.js, Vite, Playwright, Gmail SMTP/IMAP, Gemini, Groq,
+                  OpenRouter, DOCX, JavaScript
+                </p>
+                <ul class="resume__list">
+                  <li>
+                    Built a full-stack recruiting outreach console that replaces a folder of Python
+                    terminal scripts with one Node process serving a JSON API and a React SPA,
+                    keeping the original CSV and HTML-report outputs intact.
+                  </li>
+                  <li>
+                    Implemented LinkedIn content-search scraping with Playwright plus strict US-only,
+                    bench/staffing-agency and role-domain filters that record an auditable verdict
+                    and reason for every rejected lead.
+                  </li>
+                  <li>
+                    Built a JD-tailored resume engine with a Gemini → Groq → OpenRouter provider
+                    chain and a deterministic local fallback that preserves document structure, plus
+                    personalised cold email with duplicate guards and a daily cap.
+                  </li>
+                  <li>
+                    Added threaded follow-ups using real In-Reply-To/References headers, read-only
+                    IMAP reply sync matched to the contact database, and analytics with reply rate,
+                    funnel and a standalone HTML report.
                   </li>
                 </ul>
               </div>
